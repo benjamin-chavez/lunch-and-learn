@@ -1,0 +1,14 @@
+{
+  "folders": [
+	{
+		"path": "project_1_without_mypy"
+	},
+	{
+		"path": "project_2_with_mypy"
+	},
+	{
+		"path": "project_3_with_pyright"
+	}
+],
+  "settings": {}
+}

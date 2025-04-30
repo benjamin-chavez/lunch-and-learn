@@ -1,0 +1,9 @@
+{
+  "mypy-type-checker.ignorePatterns": [
+    "${workspaceFolder}/project_1_without_mypy/**"
+  ],
+  "mypy-type-checker.enabled": false,
+  "mypy-type-checker.disableOrganization": true,
+  "python.linting.mypyEnabled": false
+  "mypy"
+}

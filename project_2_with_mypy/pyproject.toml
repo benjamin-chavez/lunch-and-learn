@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "lunch-and-learn"
+version = "0.1.0"
+description = ""
+authors = ["Ben Chavez <ben.m.chavez@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
+mypy = "^1.15.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.mypy]
+config_file = "mypy.ini"

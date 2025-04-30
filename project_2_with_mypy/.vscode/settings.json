@@ -1,0 +1,23 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "black-py.useIntegratedTerminal": false,
+  "code-runner.saveAllFilesBeforeRun": true,
+  "code-runner.runInTerminal": true,
+  "files.saveConflictResolution": "overwriteFileOnDisk",
+  "editor.detectIndentation": false,
+  "editor.indentSize": "tabSize",
+  "python.testing.pytestArgs": ["tests"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "cSpell.enabled": true,
+  "cSpell.words": ["boto", "botocore", "fastapi", "iterrows", "pydantic"],
+  "python.linting.lintOnSave": true,
+
+  "python.linting.enabled": true,
+  "python.linting.mypyEnabled": true,
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": false,
+  "python.linting.mypyArgs": ["--config-file=mypy.ini"],
+  "python.analysis.typeCheckingMode": "basic"
+}
