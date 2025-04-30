@@ -1,79 +1,77 @@
+from pprint import pprint
 from typing import Any
-from typing import Dict, List, Any
+from typing import TypedDict, Any
 
 # import requests
 from urllib.parse import urlencode
+import pandas as pd
+from pandas import DataFrame
+
+from urllib.parse import urlencode
 
 
-display_formats = {
-    "dollar": "currency",
-    "percent": "percentage",
-    "days": "duration",
-    "text": "plain",
-    "timestamp": "date",
-}
+class ApiLoanFetcher:
+    def fetch_loan_data(self):
+        response = requests.get("{'http://api.loan-service.com/loans'}")
+        response.raise_for_status()
+        return response.json()
 
 
-class DisplayRule:
-    def __init__(self, format_type):
-        self.format_type = format_type
+class MockLoanFetcher1:
+    def fetch_loan_data(self) -> dict[str, Any]:
+        mock_response = {
+            "loan_number": 424242,
+            "borrower_first_name": "Luigi",
+            "borrower_last_name": "Bros",
+            "loan_amount": 150000,
+            "interest_rate": 4.25,
+            "loan_term_years": 30,
+            "property_address": "123 Mushroom Kingdom",
+            "property_type": "Single Family",
+        }
+        return mock_response
 
 
-# Version 1: loan_data is a dictionary mapping field names to their types
-def generate_display_rules(loan_data, category=None):
+class MockLoanFetcher2:
+    def fetch_loan_data(self) -> dict[str, list[Any]]:
+        mock_response = {
+            "loan_numbers": ["424242", "767676"],
+            "borrower_first_names": ["Mario", "Luigi"],
+            "borrower_last_names": ["Bros", "Bros"],
+            "loan_amounts": [150000, 200000],
+            "interest_rates": [4.25, 3.75],
+            "loan_term_years": [30, 15],
+            "property_addresses": ["123 Mushroom Kingdom", "456 Peach Castle"],
+            "property_types": ["Single Family", "Condo"],
+            "approval_statuses": ["Approved", "Pending"],
+            "closing_dates": ["2025-03-15", "2025-05-01"],
+        }
+        return mock_response
+
+
+def filter_loan_data(loan_data):
     """Generate display rules for loan data fields"""
-    rules = {}
-    for field_id, field_type in loan_data.items():
-        if "HIDDEN_" in field_id:
+    filtered_result = {}
+    for source_record, source_value in loan_data.items():
+        if "loan_number" in source_record:
             continue
-        for type_key, format_value in display_formats.items():
-            if str(field_type).startswith(type_key):
-                rule_id = f"{category}.{field_id}" if category else field_id
-                rules[rule_id] = DisplayRule(format_type=format_value)
-                break
-    return rules
+        filtered_result[source_record] = source_value
+    return filtered_result
 
 
-def fetch_loan_data():
-    # response = requests.get("{'http://api.loan-service.com/loans'}")
-    # response.raise_for_status()
-    # response = <MOCK DATA PLEASE>
-    # return response.json()
-    response = {
-        "principal": "dollar_amount",
-        "interest_rate": "percent_value",
-        "loan_term": "days_count",
-        "borrower_name": "text_string",
-        "approval_date": "timestamp_iso",
-        "HIDDEN_credit_score": "numeric",
-    }
-    return response
+def main(loan_fetcher):
+    loan_data = loan_fetcher.fetch_loan_data()
+    filtered_loan_data = filter_loan_data(loan_data)
 
+    print('\n==== RESULTING "LOAN DATA" ====')
+    pprint(filtered_loan_data, width=100, sort_dicts=False, indent=2)
+    print("\n")
 
-def main():
-    loan_data = fetch_loan_data()
-    # return transform_loan_data(loan_data)
-    display_rules = generate_display_rules(loan_data, category=None)
-    # print(display_rules)
-    print("Generated Display Rules:")
-    print("-" * 40)
-    for field, rule in display_rules.items():
-        print(f"Field: {field:<15} | Format: {rule.format_type}")
-    print("-" * 40)
-    return display_rules
+    return filtered_loan_data
 
 
 if __name__ == "__main__":
-    main()
-
-
-# def get_loan_data() -> dict[str, Any]:
-#     loan_data = {"loan_id": 1}
-#     print(loan_data)
-#     # return loan_data
-
-
-# def transform_loan_data(loan_data):
-#     for field_name, source_value in loan_data.items():
-
-#     return loan_data
+    # loan_fetcher = ApiLoanFetcher()
+    # loan_fetcher = MockLoanFetcher1()
+    loan_fetcher = MockLoanFetcher2()
+    main(loan_fetcher)
