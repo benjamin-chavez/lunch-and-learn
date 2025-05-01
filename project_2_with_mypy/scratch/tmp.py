@@ -1,15 +1,11 @@
 # examples/example1.py
 
 
-def my_func(loan_id: str) -> str:
+def my_func(loan_id):
     return loan_id
 
 
 def my_func2(loan_id: str) -> str:
-    return loan_id + 5
-
-
-def my_func3(loan_id: str) -> int:
     return loan_id + 5
 
 
